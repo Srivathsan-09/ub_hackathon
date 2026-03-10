@@ -11,37 +11,42 @@ const Sidebar = ({ activePage, setActivePage }) => {
   ];
 
   return (
-    <aside className="w-64 border-r border-gray-800 p-6 flex flex-col h-screen fixed left-0 top-0 glass z-50">
-      <div className="flex items-center gap-3 mb-10 px-2">
-        <div className="w-10 h-10 bg-gradient-to-br from-primary to-red-900 rounded-xl flex items-center justify-center text-white shadow-neon">
-          <ShieldCheck size={24} />
+    <aside className="w-72 border-r border-border p-8 flex flex-col h-screen fixed left-0 top-0 glass z-50 shadow-premium">
+      <div className="flex items-center gap-4 mb-12 px-2">
+        <div className="w-12 h-12 bg-gradient-to-br from-primary to-red-950 rounded-2xl flex items-center justify-center text-white shadow-neon border border-white/10">
+          <ShieldCheck size={28} />
         </div>
-        <h1 className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-100 to-gray-400">
-          Zombie API
-        </h1>
+        <div>
+          <h1 className="text-xl font-bold tracking-tight text-white leading-none">
+            Antigravity
+          </h1>
+          <p className="text-[10px] uppercase tracking-[0.2em] font-black text-gray-500 mt-1.5">
+            Security Ops
+          </p>
+        </div>
       </div>
 
-      <nav className="flex-1 space-y-2">
+      <nav className="flex-1 space-y-1.5">
         {menuItems.map((item) => (
           <button
             key={item.id}
             onClick={() => setActivePage(item.id)}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
+            className={`w-full flex items-center gap-3.5 px-5 py-4 rounded-2xl transition-all duration-300 group ${
               activePage === item.id
                 ? 'bg-primary/10 text-primary border border-primary/20 shadow-neon'
-                : 'text-gray-400 hover:text-gray-100 hover:bg-gray-800/50'
+                : 'text-gray-400 hover:text-white hover:bg-white/[0.03] border border-transparent'
             }`}
           >
-            <item.icon size={20} />
-            <span className="font-medium">{item.label}</span>
+            <item.icon size={22} className={`transition-transform duration-300 ${activePage === item.id ? 'scale-110' : 'group-hover:scale-110'}`} />
+            <span className="font-semibold tracking-wide">{item.label}</span>
           </button>
         ))}
       </nav>
 
-      <div className="pt-6 border-t border-gray-800">
-        <button className="w-full flex items-center gap-3 px-4 py-3 text-gray-400 hover:text-gray-100 transition-colors">
-          <Settings size={20} />
-          <span className="font-medium">Settings</span>
+      <div className="pt-8 border-t border-border">
+        <button className="w-full flex items-center gap-4 px-5 py-4 text-gray-400 hover:text-white hover:bg-white/[0.03] rounded-2xl transition-all duration-300 group">
+          <Settings size={22} className="group-hover:rotate-45 transition-transform duration-500" />
+          <span className="font-semibold tracking-wide">Settings</span>
         </button>
       </div>
     </aside>

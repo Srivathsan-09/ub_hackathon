@@ -5,9 +5,9 @@ A full-stack cybersecurity platform to automatically discover, analyze, and clas
 ## Prerequisites
 
 1.  **Docker & Docker Compose**: Ensure you have Docker installed and running.
-2.  **Ollama**: Install [Ollama](https://ollama.com/) and run Llama3 locally.
+2.  **Ollama**: Ensure you have [Ollama](https://ollama.com/) running with the **gemma3:4b** model (which matches your installation).
     ```bash
-    ollama run llama3
+    ollama run gemma3:4b
     ```
 3.  **GitHub Token**: Generate a Personal Access Token (classic) with `repo` scope to enable GitHub scanning.
 

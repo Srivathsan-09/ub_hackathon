@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Search, Filter, ExternalLink, RefreshCw, Trash2, ShieldAlert } from 'lucide-react';
+import React, { useState } from 'react';
+import { Search, Filter, ExternalLink, RefreshCw, Trash2, ShieldAlert, Database } from 'lucide-react';
 
 const Inventory = () => {
   const [apis, setApis] = useState([
@@ -18,122 +17,123 @@ const Inventory = () => {
     api.endpoint.toLowerCase().includes(search.toLowerCase())
   );
 
-  const getStatusColor = (status) => {
+  const getStatusStyle = (status) => {
     switch (status) {
-      case 'Active': return 'bg-active text-active';
-      case 'Zombie': return 'bg-zombie text-zombie';
-      case 'Deprecated': return 'bg-deprecated text-deprecated';
-      default: return 'bg-gray-500 text-gray-500';
+      case 'Active': return 'text-active bg-active/10 border-active/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]';
+      case 'Zombie': return 'text-zombie bg-zombie/10 border-zombie/20 shadow-[0_0_10px_rgba(244,63,94,0.1)]';
+      case 'Deprecated': return 'text-deprecated bg-deprecated/10 border-deprecated/20 shadow-[0_0_10px_rgba(245,158,11,0.1)]';
+      default: return 'text-gray-500 bg-gray-500/10 border-gray-500/20';
     }
   };
 
   return (
-    <div className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-10 animate-in slide-in-from-bottom-8 duration-700">
       <header className="flex justify-between items-end">
         <div>
-          <h2 className="text-3xl font-bold text-gray-100">API Inventory</h2>
-          <p className="text-gray-400 mt-1">Full registry of discovered endpoints across all sources</p>
+          <h2 className="text-4xl font-black text-white tracking-tight">API Inventory</h2>
+          <p className="text-gray-500 mt-2 font-medium">Full registry of discovered endpoints across all sources</p>
         </div>
-        <button className="flex items-center gap-2 bg-primary hover:bg-red-800 text-white px-5 py-2.5 rounded-xl transition-all shadow-neon font-semibold text-sm">
+        <button className="flex items-center gap-2.5 bg-primary hover:bg-red-700 text-white px-6 py-3.5 rounded-2xl transition-all shadow-neon font-black text-xs uppercase tracking-widest hover:scale-105 active:scale-95">
           <RefreshCw size={18} /> Run New Scan
         </button>
       </header>
 
       {/* Filters Bar */}
-      <div className="flex flex-wrap gap-4 items-center bg-gray-900/30 p-4 rounded-2xl border border-gray-800">
-        <div className="relative flex-1 min-w-[300px]">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+      <div className="flex flex-wrap gap-4 items-center glass p-5 rounded-[2rem]">
+        <div className="relative flex-1 min-w-[350px] group">
+          <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-primary transition-colors" size={20} />
           <input 
             type="text" 
-            placeholder="Search endpoint or name..." 
-            className="w-full bg-background border border-gray-800 rounded-xl py-2.5 pl-11 pr-4 focus:outline-none focus:border-primary/50 transition-colors"
+            placeholder="Filter by endpoint or resource name..." 
+            className="w-full bg-background border border-border rounded-2xl py-3.5 pl-14 pr-4 focus:outline-none focus:border-primary/50 transition-all font-medium text-gray-200"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <div className="flex gap-2">
-          <FilterButton label="All Sources" active />
+        <div className="flex gap-2 p-1.5 bg-background/50 rounded-2xl border border-border">
+          <FilterButton label="All" active />
           <FilterButton label="GitHub" />
           <FilterButton label="K8s" />
-          <FilterButton label="Logs" />
+          <FilterButton label="NGINX" />
         </div>
       </div>
 
-      {/* Table */}
-      <div className="glass rounded-3xl border border-gray-800/50 overflow-hidden shadow-2xl">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="border-b border-gray-800 bg-gray-900/50">
-              <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">API Endpoint</th>
-              <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Source</th>
-              <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right">Traffic</th>
-              <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-center">Risk</th>
-              <th className="px-6 py-4 text-xs font-semibold text-gray-400 uppercase tracking-wider text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-800/50">
-            {filteredApis.map((api) => (
-              <tr key={api.id} className="hover:bg-gray-800/20 transition-colors group">
-                <td className="px-6 py-5">
-                  <div className="font-semibold text-gray-200">{api.name}</div>
-                  <div className="text-xs font-mono text-gray-500 mt-1">{api.endpoint}</div>
-                </td>
-                <td className="px-6 py-5 whitespace-nowrap">
-                  <span className="text-sm text-gray-400 flex items-center gap-1.5">
-                    <Database size={14} className="text-accent" /> {api.source}
-                  </span>
-                </td>
-                <td className="px-6 py-5 whitespace-nowrap">
-                  <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-opacity-10 border border-opacity-20 ${getStatusColor(api.status)}`}>
-                    <span className={`w-1.5 h-1.5 rounded-full mr-2 ${getStatusColor(api.status)}`} />
-                    {api.status}
-                  </span>
-                </td>
-                <td className="px-6 py-5 text-right whitespace-nowrap font-mono text-sm text-gray-300">
-                  {api.request_count.toLocaleString()}
-                </td>
-                <td className="px-6 py-5 text-center whitespace-nowrap">
-                   <div className="flex items-center justify-center gap-2">
-                     <div className="w-full max-w-[60px] h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                        <div 
-                          className={`h-full ${api.risk_score > 7 ? 'bg-zombie' : api.risk_score > 3 ? 'bg-deprecated' : 'bg-active'}`} 
-                          style={{ width: `${api.risk_score * 10}%` }}
-                        />
-                     </div>
-                     <span className="text-xs font-bold text-gray-400">{api.risk_score}</span>
-                   </div>
-                </td>
-                <td className="px-6 py-5 text-right whitespace-nowrap">
-                   <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <IconButton icon={ExternalLink} color="accent" />
-                      <IconButton icon={ShieldAlert} color="deprecated" />
-                      <IconButton icon={Trash2} color="zombie" />
-                   </div>
-                </td>
+      {/* Table Section */}
+      <div className="glass-card rounded-[2.5rem] overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-white/[0.02] border-b border-border">
+                <th className="pl-8 pr-6 py-6 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">API Endpoint</th>
+                <th className="px-6 py-6 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Source</th>
+                <th className="px-6 py-6 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Status</th>
+                <th className="px-6 py-6 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] text-right">Traffic</th>
+                <th className="px-6 py-6 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] text-center">Security Risk</th>
+                <th className="pl-6 pr-8 py-6 text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] text-right">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-border/50">
+              {filteredApis.map((api) => (
+                <tr key={api.id} className="hover:bg-white/[0.01] transition-colors group">
+                  <td className="pl-8 pr-6 py-7">
+                    <div className="font-bold text-white text-base group-hover:text-primary transition-colors">{api.name}</div>
+                    <div className="text-xs font-mono text-gray-500 mt-1.5 tracking-tight">{api.endpoint}</div>
+                  </td>
+                  <td className="px-6 py-7 whitespace-nowrap">
+                    <span className="text-[11px] font-black uppercase tracking-widest text-gray-400 flex items-center gap-2">
+                       <span className="w-1.5 h-1.5 rounded-full bg-secondary" /> {api.source}
+                    </span>
+                  </td>
+                  <td className="px-6 py-7 whitespace-nowrap">
+                    <span className={`inline-flex items-center px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${getStatusStyle(api.status)}`}>
+                      {api.status}
+                    </span>
+                  </td>
+                  <td className="px-6 py-7 text-right whitespace-nowrap font-mono text-sm font-bold text-gray-300">
+                    {api.request_count.toLocaleString()}
+                  </td>
+                  <td className="px-6 py-7 text-center whitespace-nowrap">
+                     <div className="flex flex-col items-center gap-2">
+                       <div className="w-24 h-1.5 bg-white/5 rounded-full overflow-hidden border border-white/5">
+                          <div 
+                            className={`h-full transition-all duration-1000 ${api.risk_score > 7 ? 'bg-zombie shadow-[0_0_8px_#f43f5e]' : api.risk_score > 3 ? 'bg-deprecated shadow-[0_0_8px_#f59e0b]' : 'bg-active shadow-[0_0_8px_#10b981]'}`} 
+                            style={{ width: `${api.risk_score * 10}%` }}
+                          />
+                       </div>
+                       <span className="text-[11px] font-black text-gray-500 tracking-tighter uppercase">{api.risk_score} / 10</span>
+                     </div>
+                  </td>
+                  <td className="pl-6 pr-8 py-7 text-right whitespace-nowrap">
+                     <div className="flex justify-end gap-2.5 opacity-0 group-hover:opacity-100 transition-all transform group-hover:translate-x-0 translate-x-4">
+                        <IconButton icon={ExternalLink} color="secondary" />
+                        <IconButton icon={ShieldAlert} color="deprecated" />
+                        <IconButton icon={Trash2} color="primary" />
+                     </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
 };
 
 const FilterButton = ({ label, active }) => (
-  <button className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all border ${active ? 'bg-accent/10 border-accent/30 text-accent' : 'border-gray-800 text-gray-500 hover:text-gray-300 hover:border-gray-700'}`}>
+  <button className={`px-5 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${active ? 'bg-primary/20 border-primary/30 text-white shadow-neon' : 'border-transparent text-gray-500 hover:text-gray-300 hover:bg-white/[0.03]'}`}>
     {label}
   </button>
 );
 
 const IconButton = ({ icon: Icon, color }) => {
   const colors = {
-    accent: 'hover:text-accent hover:bg-accent/10',
-    deprecated: 'hover:text-deprecated hover:bg-deprecated/10',
-    zombie: 'hover:text-zombie hover:bg-zombie/10',
+    secondary: 'text-secondary hover:bg-secondary/10 border-secondary/20',
+    deprecated: 'text-deprecated hover:bg-deprecated/10 border-deprecated/20',
+    primary: 'text-primary hover:bg-primary/10 border-primary/20',
   };
   return (
-    <button className={`p-2 rounded-lg text-gray-500 transition-colors ${colors[color]}`}>
+    <button className={`p-2.5 rounded-xl border transition-all duration-300 ${colors[color]} hover:scale-110 active:scale-90 shadow-premium`}>
       <Icon size={18} />
     </button>
   );

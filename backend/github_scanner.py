@@ -2,8 +2,8 @@ import re
 import httpx
 import os
 from typing import List, Dict
-from .database import SessionLocal
-from .models import API, AuditLog
+from database import SessionLocal
+from models import API, AuditLog
 
 # Regex to find common API route patterns in code (e.g., @app.get("/path"), router.get("/path"), axios.get("/path"))
 ROUTE_PATTERNS = [

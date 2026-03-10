@@ -1,7 +1,7 @@
 import re
 import datetime
-from .database import SessionLocal
-from .models import API, AuditLog
+from database import SessionLocal
+from models import API, AuditLog
 
 # Regex for common NGINX access log format: 
 # 127.0.0.1 - - [10/Mar/2026:23:59:00 +0000] "GET /api/user/login HTTP/1.1" 200 123 "-" "-"

@@ -1,7 +1,7 @@
 from kubernetes import client, config
 import os
-from .database import SessionLocal
-from .models import API, AuditLog
+from database import SessionLocal
+from models import API, AuditLog
 
 class K8sScanner:
     def __init__(self):

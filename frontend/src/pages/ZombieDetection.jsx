@@ -9,65 +9,58 @@ const ZombieDetection = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-in zoom-in-95 duration-500">
+    <div className="space-y-10 animate-in zoom-in-95 duration-700">
       <header>
-        <h2 className="text-3xl font-bold text-gray-100 flex items-center gap-3">
-          <Ghost className="text-primary" size={32} />
-          Zombie API Detection
+        <h2 className="text-4xl font-black text-white tracking-tight flex items-center gap-4">
+          <div className="w-12 h-12 bg-zombie/10 rounded-2xl flex items-center justify-center text-zombie border border-zombie/20">
+            <Ghost size={32} />
+          </div>
+          Zombie Detection
         </h2>
-        <p className="text-gray-400 mt-1">AI-powered identification of abandoned or exposed endpoints</p>
+        <p className="text-gray-500 mt-2 font-medium">AI-powered identification of abandoned or exposed endpoints</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="glass p-6 rounded-3xl border border-zombie/20 bg-zombie/[0.02]">
-           <p className="text-sm text-gray-400">Identified Zombies</p>
-           <p className="text-3xl font-bold text-zombie">23</p>
-        </div>
-        <div className="glass p-6 rounded-3xl border border-deprecated/20">
-           <p className="text-sm text-gray-400">Stale APIs (30d+)</p>
-           <p className="text-3xl font-bold text-deprecated">42</p>
-        </div>
-        <div className="glass p-6 rounded-3xl border border-active/20">
-           <p className="text-sm text-gray-400">Total Scan Depth</p>
-           <p className="text-3xl font-bold text-active">1,240</p>
-        </div>
+        <StatsTile label="Identified Zombies" value="23" color="zombie" />
+        <StatsTile label="Stale APIs (30d+)" value="42" color="deprecated" />
+        <StatsTile label="Total Scan Depth" value="1,240" color="active" />
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         {zombies.map((zombie) => (
-          <div key={zombie.id} className="glass p-6 rounded-3xl border border-gray-800/50 hover:border-zombie/40 transition-all group relative overflow-hidden">
-             <div className="flex justify-between items-start relative z-10">
-                <div className="flex gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-gray-900 flex items-center justify-center text-zombie border border-zombie/20">
-                    <ShieldAlert size={24} />
+          <div key={zombie.id} className="glass-card p-8 rounded-[2.5rem] group relative overflow-hidden transition-all duration-500">
+             <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-8 relative z-10">
+                <div className="flex gap-6">
+                  <div className="w-20 h-20 rounded-3xl bg-surface flex items-center justify-center text-zombie border border-border group-hover:border-zombie/50 transition-all duration-500">
+                    <ShieldAlert size={36} className="group-hover:scale-110 transition-transform" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-200">{zombie.name}</h3>
-                    <p className="text-xs font-mono text-gray-500">{zombie.endpoint}</p>
-                    <div className="flex gap-4 mt-3">
+                    <h3 className="text-xl font-bold text-white group-hover:text-zombie transition-colors">{zombie.name}</h3>
+                    <p className="text-xs font-mono text-gray-500 mt-1 tracking-tight">{zombie.endpoint}</p>
+                    <div className="flex flex-wrap gap-3 mt-4">
                       <Tag label={`Risk: ${zombie.risk}`} color="zombie" />
-                      <Tag label={zombie.source} color="accent" />
+                      <Tag label={zombie.source} color="secondary" />
                       <Tag label={`Last seen: ${zombie.last_seen}`} color="gray" />
                     </div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-xs text-gray-500 uppercase tracking-widest font-bold mb-2">Detected Issue</p>
-                  <p className="text-sm font-semibold text-gray-300 bg-gray-900 px-3 py-1 rounded-lg border border-gray-800 italic">
+                <div className="lg:text-right flex flex-col items-start lg:items-end w-full lg:w-auto">
+                  <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-black mb-3">Vulnerability Profile</p>
+                  <p className="text-sm font-bold text-gray-200 bg-white/[0.03] px-5 py-3 rounded-2xl border border-white/5 italic shadow-premium group-hover:border-zombie/30 transition-all">
                     "{zombie.vulnerability}"
                   </p>
-                  <div className="mt-4 flex gap-2 justify-end opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button className="px-4 py-2 bg-zombie/10 text-zombie border border-zombie/20 rounded-xl text-xs font-bold hover:bg-zombie/20 transition-colors">
-                      Remediate Now
+                  <div className="mt-6 flex gap-3 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                    <button className="px-6 py-2.5 bg-zombie/10 text-zombie border border-zombie/30 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-zombie hover:text-white transition-all shadow-premium">
+                      Remediate
                     </button>
-                    <button className="px-4 py-2 bg-gray-800 text-gray-300 rounded-xl text-xs font-bold hover:text-white transition-colors">
+                    <button className="px-6 py-2.5 bg-white/5 text-gray-400 border border-white/5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:text-white transition-all">
                       Ignore
                     </button>
                   </div>
                 </div>
              </div>
-             {/* Background glow */}
-             <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-zombie/5 to-transparent pointer-events-none" />
+             {/* Decorative glow */}
+             <div className="absolute right-0 top-0 w-64 h-full bg-gradient-to-l from-zombie/[0.03] to-transparent pointer-events-none" />
           </div>
         ))}
       </div>
@@ -75,14 +68,28 @@ const ZombieDetection = () => {
   );
 };
 
+const StatsTile = ({ label, value, color }) => {
+  const colors = {
+    zombie: 'text-zombie border-zombie/20 bg-zombie/5',
+    deprecated: 'text-deprecated border-deprecated/20 bg-deprecated/5',
+    active: 'text-active border-active/20 bg-active/5',
+  };
+  return (
+    <div className={`glass p-8 rounded-3xl border ${colors[color]} shadow-premium`}>
+       <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">{label}</p>
+       <p className={`text-4xl font-black ${colors[color].split(' ')[0]}`}>{value}</p>
+    </div>
+  );
+};
+
 const Tag = ({ label, color }) => {
   const colors = {
     zombie: 'bg-zombie/10 text-zombie border-zombie/20',
-    accent: 'bg-accent/10 text-accent border-accent/20',
-    gray: 'bg-gray-800 text-gray-400 border-gray-700',
+    secondary: 'bg-secondary/10 text-secondary border-secondary/20',
+    gray: 'bg-white/5 text-gray-500 border-white/10',
   };
   return (
-    <span className={`px-2 py-0.5 rounded-lg text-[10px] uppercase font-bold border ${colors[color]}`}>
+    <span className={`px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest border ${colors[color]}`}>
       {label}
     </span>
   );

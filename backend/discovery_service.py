@@ -1,7 +1,7 @@
-import datetime
+from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from .models import API, AuditLog
-from .database import SessionLocal
+from models import API, AuditLog
+from database import SessionLocal
 
 class DiscoveryService:
     @staticmethod
@@ -12,8 +12,8 @@ class DiscoveryService:
         db = SessionLocal()
         try:
             apis = db.query(API).all()
-            now = datetime.datetime.utcnow()
-            zombie_threshold = now - datetime.timedelta(days=30)
+            now = datetime.utcnow()
+            zombie_threshold = now - timedelta(days=30)
             
             for api in apis:
                 old_status = api.status

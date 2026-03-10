@@ -1,6 +1,6 @@
 import datetime
-from .database import SessionLocal
-from .models import API, AuditLog
+from database import SessionLocal
+from models import API, AuditLog
 
 def generate_demo_data():
     """

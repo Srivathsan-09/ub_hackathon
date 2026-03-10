@@ -1,48 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@theme {
+  --color-background: #050506;
+  --color-surface: #0c0d0f;
+  --color-surface-hover: #141519;
+  --color-primary: #dc2626;
+  --color-secondary: #2563eb;
+  --color-active: #10b981;
+  --color-zombie: #f43f5e;
+  --color-deprecated: #f59e0b;
+  --color-border: rgba(255, 255, 255, 0.08);
+  
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "Fira Code", monospace;
 
-:root {
-  color-scheme: dark;
+  --shadow-premium: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --shadow-neon: 0 0 20px rgba(220, 38, 38, 0.15);
 }
 
-body {
-  margin: 0;
-  background-color: #0a0a0b;
-  color: #e5e7eb;
-  font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
+@layer base {
+  body {
+    @apply bg-background text-gray-200 antialiased font-sans;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-surface/60 backdrop-blur-xl border border-border;
+  }
+  
+  .glass-card {
+    @apply bg-gradient-to-br from-surface to-background backdrop-blur-md border border-border shadow-premium hover:border-white/10 transition-all duration-300;
+  }
+
+  .text-glow-primary {
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.4);
+  }
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0b;
+  @apply bg-background;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
-}
-
-.glass {
-  background: rgba(20, 20, 23, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.card-hover:hover {
-  border-color: rgba(185, 28, 28, 0.3);
-  box-shadow: 0 0 15px rgba(185, 28, 28, 0.1);
-  transform: translateY(-2px);
-  transition: all 0.3s ease;
+  @apply bg-gray-800 rounded-full hover:bg-gray-700 transition-colors;
 }

@@ -2,8 +2,8 @@ import httpx
 import json
 import redis
 import os
-from .database import SessionLocal
-from .models import API, AuditLog
+from database import SessionLocal
+from models import API, AuditLog
 
 # Redis setup for caching
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
@@ -49,7 +49,7 @@ class AIRiskEngine:
             try:
                 async with httpx.AsyncClient(timeout=30.0) as client:
                     response = await client.post(self.ollama_url, json={
-                        "model": "llama3",
+                        "model": "gemma3:4b",
                         "prompt": prompt,
                         "stream": False
                     })

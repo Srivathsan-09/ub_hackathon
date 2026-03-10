@@ -1,10 +1,10 @@
 from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 from typing import List
-from . import models, database, github_scanner, k8s_scanner, nginx_parser, discovery_service, ai_risk
-from .database import engine, get_db
+import models, database, github_scanner, k8s_scanner, nginx_parser, discovery_service, ai_risk
+from database import get_db
 
-models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="Zombie API Discovery & Defense")
 ai_engine = ai_risk.AIRiskEngine()
