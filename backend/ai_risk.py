@@ -6,10 +6,13 @@ from .database import SessionLocal
 from .models import API, AuditLog
 
 # Redis setup for caching
-redis_client = redis.Redis(host='localhost', port=6379, db=0, decode_responses=True)
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 
 class AIRiskEngine:
-    def __init__(self, ollama_url: str = "http://localhost:11434/api/generate"):
+    def __init__(self, ollama_url: str = None):
+        if ollama_url is None:
+            ollama_url = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
         self.ollama_url = ollama_url
 
     async def analyze_api(self, api_id: int):

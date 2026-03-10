@@ -7,6 +7,9 @@ services:
       - DATABASE_URL=postgresql://user:password@db:5432/zombie_api_db
       - REDIS_URL=redis://redis:6379/0
       - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - OLLAMA_URL=http://host.docker.internal:11434/api/generate
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
       - db
       - redis

@@ -8,7 +8,11 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM npx-static-server
-WORKDIR /app
-COPY --from=build /app/dist .
-CMD ["npx", "-y", "static-server"]
+FROM nginx:stable-alpine
+
+COPY --from=build /app/dist /usr/share/nginx/html/
+# vite.config.js is not needed for production build usually
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
