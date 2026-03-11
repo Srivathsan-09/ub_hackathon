@@ -3,13 +3,13 @@ import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
 import { ArrowUpRight, ArrowDownRight, AlertTriangle, Activity, Zap, ShieldCheck } from 'lucide-react';
 
 const mockTrendData = [
-  { name: 'Mon', active: 80, zombies: 10 },
-  { name: 'Tue', active: 85, zombies: 12 },
-  { name: 'Wed', active: 82, zombies: 15 },
-  { name: 'Thu', active: 90, zombies: 18 },
-  { name: 'Fri', active: 88, zombies: 20 },
-  { name: 'Sat', active: 86, zombies: 22 },
-  { name: 'Sun', active: 84, zombies: 23 },
+  { name: 'Mon', active: 80, abandoned: 10 },
+  { name: 'Tue', active: 85, abandoned: 12 },
+  { name: 'Wed', active: 82, abandoned: 15 },
+  { name: 'Thu', active: 90, abandoned: 18 },
+  { name: 'Fri', active: 88, abandoned: 20 },
+  { name: 'Sat', active: 86, abandoned: 22 },
+  { name: 'Sun', active: 84, abandoned: 23 },
 ];
 
 const riskData = [
@@ -24,12 +24,12 @@ const Dashboard = () => {
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <header className="flex justify-between items-end">
         <div>
-          <h2 className="text-4xl font-black text-white tracking-tight">Security Center</h2>
-          <p className="text-gray-500 mt-2 font-medium">Real-time API intelligence across infrastructure</p>
+          <h2 className="text-4xl font-black text-white tracking-tight">Security Command</h2>
+          <p className="text-gray-500 mt-2 font-medium">Enterprise API intelligence and threat landscape</p>
         </div>
         <div className="flex gap-3">
           <div className="px-4 py-2 rounded-xl bg-white/[0.03] border border-border text-[10px] font-bold uppercase tracking-widest text-gray-500 flex items-center gap-2">
-            Last Scan: <span className="text-gray-300">2 mins ago</span>
+            Last Inventory: <span className="text-gray-300">2 mins ago</span>
           </div>
         </div>
       </header>
@@ -38,8 +38,8 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard title="Total APIs" value="124" icon={Activity} trend="+12%" />
         <StatCard title="Active" value="86" icon={Zap} trend="+5%" color="active" />
-        <StatCard title="Zombie" value="23" icon={AlertTriangle} trend="+8%" color="zombie" />
-        <StatCard title="Risk Score" value="6.8" icon={ShieldCheck} trend="+0.2" color="deprecated" />
+        <StatCard title="Abandoned" value="23" icon={AlertTriangle} trend="+8%" color="zombie" />
+        <StatCard title="Risk Index" value="6.8" icon={ShieldCheck} trend="+0.2" color="deprecated" />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -50,11 +50,11 @@ const Dashboard = () => {
               <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                 <Activity size={20} />
               </div>
-              Traffic intelligence
+              Threat intelligence
             </h3>
             <div className="flex gap-6 text-[10px] font-black uppercase tracking-widest">
               <span className="flex items-center gap-2 text-active"><span className="w-2.5 h-2.5 rounded-full bg-active shadow-[0_0_8px_#10b981]" /> Active</span>
-              <span className="flex items-center gap-2 text-zombie"><span className="w-2.5 h-2.5 rounded-full bg-zombie shadow-[0_0_8px_#f43f5e]" /> Zombies</span>
+              <span className="flex items-center gap-2 text-zombie"><span className="w-2.5 h-2.5 rounded-full bg-zombie shadow-[0_0_8px_#f43f5e]" /> Abandoned</span>
             </div>
           </div>
           <div className="h-80 w-full">
@@ -78,7 +78,7 @@ const Dashboard = () => {
                   itemStyle={{ fontSize: '11px', fontWeight: '700' }}
                 />
                 <Area type="monotone" dataKey="active" stroke="#10b981" fillOpacity={1} fill="url(#colorActive)" strokeWidth={3} />
-                <Area type="monotone" dataKey="zombies" stroke="#f43f5e" fillOpacity={1} fill="url(#colorZombie)" strokeWidth={3} />
+                <Area type="monotone" dataKey="abandoned" stroke="#f43f5e" fillOpacity={1} fill="url(#colorZombie)" strokeWidth={3} />
               </AreaChart>
             </ResponsiveContainer>
           </div>

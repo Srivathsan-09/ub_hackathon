@@ -67,7 +67,7 @@ const Remediation = () => {
               <label className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ml-1">Default Remediation</label>
               <select className="w-full bg-background border border-border rounded-2xl px-5 py-4 text-sm font-bold text-gray-300 focus:outline-none focus:border-primary/50 transition-all appearance-none cursor-pointer hover:border-white/10">
                 <option>Notify Security Team</option>
-                <option>Disable Immediately</option>
+                <option>Disable Abandoned APIs</option>
                 <option>Wait for Manual Review</option>
               </select>
             </div>

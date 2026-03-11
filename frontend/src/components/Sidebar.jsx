@@ -1,11 +1,10 @@
-import React from 'react';
-import { LayoutDashboard, Database, Ghost, ShieldCheck, Settings, Activity } from 'lucide-react';
+import { LayoutDashboard, Database, FileWarning, ShieldCheck, Settings, Activity } from 'lucide-react';
 
 const Sidebar = ({ activePage, setActivePage }) => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'inventory', label: 'API Inventory', icon: Database },
-    { id: 'zombies', label: 'Zombie Detection', icon: Ghost },
+    { id: 'zombies', label: 'Abandoned APIs', icon: FileWarning },
     { id: 'remediation', label: 'Remediation', icon: ShieldCheck },
     { id: 'infrastructure', label: 'Infrastructure', icon: Activity },
   ];
@@ -13,12 +12,9 @@ const Sidebar = ({ activePage, setActivePage }) => {
   return (
     <aside className="w-72 border-r border-border p-8 flex flex-col h-screen fixed left-0 top-0 glass z-50 shadow-premium">
       <div className="flex items-center gap-4 mb-12 px-2">
-        <div className="w-12 h-12 bg-gradient-to-br from-primary to-red-950 rounded-2xl flex items-center justify-center text-white shadow-neon border border-white/10">
-          <ShieldCheck size={28} />
-        </div>
         <div>
           <h1 className="text-xl font-bold tracking-tight text-white leading-none">
-            Antigravity
+            ADAPT 
           </h1>
           <p className="text-[10px] uppercase tracking-[0.2em] font-black text-gray-500 mt-1.5">
             Security Ops

@@ -4,10 +4,10 @@ import { Search, Filter, ExternalLink, RefreshCw, Trash2, ShieldAlert, Database 
 const Inventory = () => {
   const [apis, setApis] = useState([
     { id: 1, name: 'User Authentication', endpoint: '/api/v1/auth/login', source: 'GitHub', status: 'Active', request_count: 1240, risk_score: 1.2 },
-    { id: 2, name: 'Old Payment Gateway', endpoint: '/api/v1/payments/legacy', source: 'Kubernetes', status: 'Zombie', request_count: 0, risk_score: 8.5 },
+    { id: 2, name: 'Old Payment Gateway', endpoint: '/api/v1/payments/legacy', source: 'Kubernetes', status: 'Abandoned', request_count: 0, risk_score: 8.5 },
     { id: 3, name: 'User Profile Sync', endpoint: '/api/v2/user/sync', source: 'NGINX', status: 'Active', request_count: 450, risk_score: 2.1 },
     { id: 4, name: 'Beta Features', endpoint: '/api/beta/features', source: 'Gateway', status: 'Deprecated', request_count: 5, risk_score: 4.8 },
-    { id: 5, name: 'Admin Debug Tool', endpoint: '/admin/debug/logs', source: 'NGINX', status: 'Zombie', request_count: 0, risk_score: 9.2 },
+    { id: 5, name: 'Admin Debug Tool', endpoint: '/admin/debug/logs', source: 'NGINX', status: 'Abandoned', request_count: 0, risk_score: 9.2 },
   ]);
 
   const [search, setSearch] = useState('');
@@ -20,7 +20,7 @@ const Inventory = () => {
   const getStatusStyle = (status) => {
     switch (status) {
       case 'Active': return 'text-active bg-active/10 border-active/20 shadow-[0_0_10px_rgba(16,185,129,0.1)]';
-      case 'Zombie': return 'text-zombie bg-zombie/10 border-zombie/20 shadow-[0_0_10px_rgba(244,63,94,0.1)]';
+      case 'Abandoned': return 'text-zombie bg-zombie/10 border-zombie/20 shadow-[0_0_10px_rgba(244,63,94,0.1)]';
       case 'Deprecated': return 'text-deprecated bg-deprecated/10 border-deprecated/20 shadow-[0_0_10px_rgba(245,158,11,0.1)]';
       default: return 'text-gray-500 bg-gray-500/10 border-gray-500/20';
     }

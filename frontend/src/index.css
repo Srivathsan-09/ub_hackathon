@@ -6,8 +6,8 @@
   --color-surface-hover: #141519;
   --color-primary: #dc2626;
   --color-secondary: #2563eb;
-  --color-active: #10b981;
-  --color-zombie: #f43f5e;
+  --color-secure: #10b981;
+  --color-alert: #f43f5e;
   --color-deprecated: #f59e0b;
   --color-border: rgba(255, 255, 255, 0.08);
   

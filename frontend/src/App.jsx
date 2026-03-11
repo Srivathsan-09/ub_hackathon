@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Inventory from './pages/Inventory';
-import ZombieDetection from './pages/ZombieDetection';
+import AbandonedDetection from './pages/ZombieDetection';
 import Remediation from './pages/Remediation';
 import { Shield, Bell, User } from 'lucide-react';
 
@@ -13,7 +13,7 @@ function App() {
     switch (activePage) {
       case 'dashboard': return <Dashboard />;
       case 'inventory': return <Inventory />;
-      case 'zombies': return <ZombieDetection />;
+      case 'zombies': return <AbandonedDetection />;
       case 'remediation': return <Remediation />;
       case 'infrastructure': return <div className="text-center py-20 text-gray-500">Infrastructure Sources Loading...</div>;
       default: return <Dashboard />;
